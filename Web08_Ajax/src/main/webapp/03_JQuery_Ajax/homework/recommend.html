@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.7.1.js" > 
+</script>
+<title>추천하기</title>
+</head>
+<body>
+	<h2>검색 키워드 입력하세요.</h2>
+	
+	<div>
+	 	검색 : <input type = "text" id = "title"><br>
+	 	
+	 	<button id="loginBtn">검색</button>
+	 </div>
+	 <script type="text/javascript">
+	 	$(document).ready(function(){
+	 		$('#loginBtn').click(function(){
+	 			console.log("클릭했냐?");
+	 			let userid = $('#userid').val();
+	 			let password = $('#password').val();
+	 			
+	 			let obj = {
+	 					"userid" : userid,
+	 					"password" : password
+	 			};
+	 			
+	 			// ajax 요청 전송 
+	 			$.ajax({
+	 				type : 'post',
+	 				url : '../login.do', // http://localhost:8080/Web08_Ajax/03_JQuery_Ajax/08_json_example.html
+	 				data : {'obj' : JSON.stringify(obj)}, // JSON으로 변환
+	 				success : function(result){
+	 					if(result == 'success') {
+	 						alert('로그인 정보 일치');
+	 					} else{
+	 						alert('로그인 정보 불일치');
+	 					}
+	 				}
+	 			});//end ajax
+	 		});
+	 	});
+	 </script>
+	
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.7.1.js" > 
+</script>
+<title>로그인 페이지</title>
+</head>
+<body>
+	<h1>로그인 페이지</h1>
+	<!-- 
+	로그인 페이지 생성 
+	아이디 입력 input 
+	비밀번호 입력 input
+	로그인 버튼을 클릭하면 
+	아이디 비밀번호 데이터가 서버로 전송된다. 서버에서는 아이디 비밀번호를 확인하여 
+	아이디 = "test" 비밀번호 = "1234" 일 경우
+	비동기 방식으로 클라이언트에 "success" 메세지를 전송한다.
+	 -->
+	 <div>
+	 	아이디 : <input type = "text" id = "userid"><br>
+	 	비밀번호 : <input type = "password" id="password"><br>
+	 	<button id="loginBtn">로그인</button>
+	 </div>
+	 <script type="text/javascript">
+	 	$(document).ready(function(){
+	 		$('#loginBtn').click(function(){
+	 			console.log("클릭했냐?");
+	 			let userid = $('#userid').val();
+	 			let password = $('#password').val();
+	 			
+	 			let obj = {
+	 					"userid" : userid,
+	 					"password" : password
+	 			};
+	 			
+	 			// ajax 요청 전송 
+	 			$.ajax({
+	 				type : 'post',
+	 				url : '../login.do', // http://localhost:8080/Web08_Ajax/03_JQuery_Ajax/08_json_example.html
+	 				data : {'obj' : JSON.stringify(obj)}, // JSON으로 변환
+	 				success : function(result){
+	 					if(result == 'success') {
+	 						alert('로그인 정보 일치');
+	 					} else{
+	 						alert('로그인 정보 불일치');
+	 					}
+	 				}
+	 			});//end ajax
+	 		});
+	 	});
+	 </script>
+	 
+</body>
+</html>
