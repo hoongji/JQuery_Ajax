@@ -9,34 +9,33 @@
 <body>
 	<h2>검색 키워드 입력하세요.</h2>
 	
-	<div>
-	 	검색 : <input type = "text" id = "title"><br>
-	 	
-	 	<button id="loginBtn">검색</button>
-	 </div>
+	 <p>
+	 	검색 : <input type = "text" id = "txt"><br>
+	 </p>
+	 <p>
+	 	추천 : <br><span id="txtHint"></span><br>
+	 </p>
 	 <script type="text/javascript">
 	 	$(document).ready(function(){
-	 		$('#loginBtn').click(function(){
-	 			console.log("클릭했냐?");
-	 			let userid = $('#userid').val();
-	 			let password = $('#password').val();
+	 		$('#txt').keyup(function(){
+	 			let keyword = $('#txt').val();
+	 			console.log(keyword);
 	 			
-	 			let obj = {
-	 					"userid" : userid,
-	 					"password" : password
-	 			};
 	 			
 	 			// ajax 요청 전송 
 	 			$.ajax({
-	 				type : 'post',
-	 				url : '../login.do', // http://localhost:8080/Web08_Ajax/03_JQuery_Ajax/08_json_example.html
-	 				data : {'obj' : JSON.stringify(obj)}, // JSON으로 변환
+	 				type : 'get',
+	 				url : '../recommend.do', 
+	 				data : {'keyword' : keyword}, 
 	 				success : function(result){
-	 					if(result == 'success') {
-	 						alert('로그인 정보 일치');
-	 					} else{
-	 						alert('로그인 정보 불일치');
+	 					console.log(typeof(result));
+	 					let obj = JSON.parse(result);
+	 					let list = '';
+	 					for(let x in obj){ //히든 미션
+	 						list += "<a href='https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query="+ obj[x].title +"'>"
+							+ obj[x].title + '</a><br>';
 	 					}
+	 					$('#txtHint').html(list);
 	 				}
 	 			});//end ajax
 	 		});

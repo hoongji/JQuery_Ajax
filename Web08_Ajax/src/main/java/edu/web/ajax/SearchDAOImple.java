@@ -11,10 +11,23 @@ import java.util.ArrayList;
 import oracle.jdbc.OracleDriver;
 
 public class SearchDAOImple implements SearchDAO, SearchQuery {
-
+	// ?? getInstance
+	private static SearchDAOImple instance = null;
+	
+	private SearchDAOImple() {}
+	
+	public static SearchDAOImple getInstance() {
+		if(instance == null) {
+			instance = new SearchDAOImple();
+		}
+		return instance;
+	}
+	
+	
 	@Override
-	public ArrayList<String> select(String title) {
+	public ArrayList<String> select(String keyword) {
 		ArrayList<String> list = null;
+		// ArrayList<String> list = new ArrayList<String>();
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -25,21 +38,21 @@ public class SearchDAOImple implements SearchDAO, SearchQuery {
 		conn = DriverManager.getConnection(URL, USER, PASSWORD);
 		System.out.println("DB 연결 성공");
 			pstmt = conn.prepareStatement(SQL_SELECT_BY_TITLE);
-	        
+	       
+			pstmt.setString(1,"%" +  keyword + "%");  // 추가 
 	        rs = pstmt.executeQuery(); 
 	        
 	        list = new ArrayList<>();
 	        
 	        while(rs.next()) { 
-				int sno = rs.getInt(COL_SNO); 
-				title = rs.getString(COL_TITLE); 
-				
-				SearchVO vo = new SearchVO(sno, title);
-				list.add(title);
+				 
+				String title = rs.getString(COL_TITLE); 
+				System.out.println(title);
+			
+				list.add(title); // vo 추가 필요없이 LIST에 담기만 하면 됨 
 			}
 	        
-	        
-	        System.out.println("SQL_SELECT 성공");
+	      
 	        
 	    } catch (SQLException e) {
 	        System.out.println(e.toString());

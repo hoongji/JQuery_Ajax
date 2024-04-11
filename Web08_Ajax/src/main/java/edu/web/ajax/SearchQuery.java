@@ -8,7 +8,7 @@ public interface SearchQuery {
 		
 		// DB 테이블 컬럼 상수 정의
 		public static final String TABLE_NAME = "SEARCH";
-		public static final int COL_SNO = 0;
+		public static final String COL_SNO = "SNO";
 		public static final String COL_TITLE = "TITLE";
 		
 		
@@ -16,9 +16,9 @@ public interface SearchQuery {
 		
 
 	    
-		// SELECT TLTLE FROM TEST_MEMBER WHERE TITLE = ?
+		// SELECT * FROM TEST_MEMBER WHERE TITLE LIKE ?
 	 	public static final String SQL_SELECT_BY_TITLE = 
-	 			"SELECT " + COL_TITLE + " FROM " + TABLE_NAME + " WHERE " + COL_TITLE + " LIKE" + " ?";
+	 			"SELECT " + COL_TITLE + " FROM " + TABLE_NAME + " WHERE " + COL_TITLE + " LIKE ?";
 	 	
 	 	
 	 	
